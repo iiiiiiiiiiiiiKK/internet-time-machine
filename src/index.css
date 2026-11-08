@@ -1,0 +1,175 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink-950: #08090b;
+  --color-ink-900: #0b0d10;
+  --color-ink-850: #101318;
+  --color-ink-800: #14181e;
+  --color-ink-700: #1c212a;
+  --color-ink-600: #262c37;
+
+  --color-paper-50: #fbfaf6;
+  --color-paper-100: #f4f1e8;
+  --color-paper-200: #e6e0d2;
+  --color-paper-300: #cfc7b5;
+  --color-paper-400: #9a9488;
+  --color-paper-500: #767065;
+  --color-paper-600: #55514a;
+
+  --color-signal: #d7ff3a;
+  --color-signal-dim: #a8c92e;
+  --color-ember: #ff7a3d;
+
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", "Cascadia Mono", Consolas, monospace;
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  background-color: var(--color-ink-950);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background-color: var(--color-ink-950);
+  color: var(--color-paper-100);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior-y: none;
+}
+
+#root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* iOS Safari: inputs below 16px trigger an involuntary page zoom. */
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(215, 255, 58, 0.35) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(215, 255, 58, 0.25);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(215, 255, 58, 0.45);
+}
+
+/* Subtle CRT scanline overlay — decorative only. */
+.scanlines::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 70;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.018) 0px,
+    rgba(255, 255, 255, 0.018) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+  mix-blend-mode: screen;
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+@keyframes itm-flicker {
+  0%, 96%, 98%, 100% { opacity: 1; }
+  97% { opacity: 0.86; }
+  99% { opacity: 0.92; }
+}
+
+.crt-flicker {
+  animation: itm-flicker 7s infinite;
+}
+
+@keyframes itm-pulse-ring {
+  0% { transform: scale(0.92); opacity: 0.55; }
+  70% { transform: scale(1.35); opacity: 0; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.pulse-ring {
+  position: relative;
+}
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid currentColor;
+  animation: itm-pulse-ring 2.4s cubic-bezier(0.24, 0.6, 0.32, 1) infinite;
+}
+
+@keyframes itm-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes itm-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: itm-marquee 42s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Horizontal year rail: scrollable but with no visible scrollbar. */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+:where(a, button, input, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-signal);
+  outline-offset: 2px;
+}
+
+/* Safe-area padding for notched iPhones. */
+.pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+.pt-safe {
+  padding-top: max(0.5rem, env(safe-area-inset-top));
+}

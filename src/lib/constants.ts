@@ -1,0 +1,5 @@
+export const AUTHOR_X_URL = 'https://x.com/0xkillcoin'
+export const AUTHOR_HANDLE = '@0xkillcoin'
+export const GITHUB_URL = 'https://github.com/iiiiiiiiiiiiiKK/internet-time-machine'
+export const ARCHIVE_URL = 'https://web.archive.org/'
+export const ARCHIVE_TERMS = 'https://archive.org/about/terms.php'
