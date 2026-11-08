@@ -6,7 +6,7 @@
 
 输入任意网址，回到它的过去——真实快照、真实日期，没有任何伪造截图。
 
-[![在线演示](https://img.shields.io/badge/在线演示-d7ff3a?style=for-the-badge)](https://internet-time-machine.pages.dev)
+[![在线演示](https://img.shields.io/badge/在线演示-d7ff3a?style=for-the-badge)](https://internet-time-machine-7p5.pages.dev)
 [![许可证: MIT](https://img.shields.io/badge/许可证-MIT-blue?style=for-the-badge)](LICENSE)
 [![React 19](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -292,6 +292,18 @@ npm run test:e2e    # 16 个 Playwright 测试（桌面 + iPhone 14）
   但对超大站点的冷查询仍可能被短暂限流。
 - **存档覆盖不是编辑行为。** 某一年缺失只说明爬虫没有抓到，不代表网站当时不存在。
 - **快照页的日期导航**会重新探测当前年与相邻年份，不缓存站点完整历史索引。
+
+### 复现验证
+
+```bash
+npm run test:e2e                                    # 本地构建，两个项目全跑
+node scripts/verify-production.mjs <部署地址>       # 对线上站点做冒烟验证
+node scripts/capture-screenshots.mjs <部署地址>     # 重新生成 README 截图
+```
+
+`verify-production.mjs` 会在部署地址上逐项断言：边缘函数返回真实 CDX 数据且带 CORS、
+SSRF 与非法主机被拒绝、时间轴渲染出 25 年真实数据、快照 iframe 指向
+`web.archive.org`、控制台无报错，以及 iPhone 14 零横向溢出且抽屉可用。
 
 ---
 

@@ -1,0 +1,13 @@
+#:schema node_modules/wrangler/config-schema.json
+# Cloudflare Pages project configuration.
+#
+# `pages_build_output_dir` lets `wrangler pages dev` and
+# `wrangler pages deploy` work without CLI flags, and pins the compatibility
+# date so the Function runtime is reproducible.
+name = "internet-time-machine"
+compatibility_date = "2026-11-01"
+pages_build_output_dir = "dist"
+
+# Optional: point the proxy at a self-hosted CDX mirror.
+# [vars]
+# CDX_UPSTREAM = "https://web.archive.org/cdx/search/cdx"

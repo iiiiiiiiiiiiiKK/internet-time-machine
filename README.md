@@ -6,7 +6,7 @@
 
 Enter any URL. Travel to its past — real snapshots, real dates, no fabricated screenshots.
 
-[![Live Demo](https://img.shields.io/badge/live-demo-d7ff3a?style=for-the-badge)](https://internet-time-machine.pages.dev)
+[![Live Demo](https://img.shields.io/badge/live-demo-d7ff3a?style=for-the-badge)](https://internet-time-machine-7p5.pages.dev)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 [![React 19](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
 [![TypeScript](https://img.shields.io/badge/TypeScript-strict-3178c6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -306,6 +306,20 @@ Run `npx playwright test --project=iphone-14` for the mobile gate alone.
   it, not that the site did not exist.
 - **`snapshot` day navigation** re-probes the current and adjacent years; it
   does not hold an in-memory index of a site's full history.
+
+### Reproducing the verification
+
+```bash
+npm run test:e2e                                    # local build, both projects
+node scripts/verify-production.mjs <deployed-url>    # smoke test the live site
+node scripts/capture-screenshots.mjs <deployed-url> # regenerate README images
+```
+
+`verify-production.mjs` asserts, against the deployed URL: the edge function
+returns real CDX data with CORS, SSRF and invalid-host targets are rejected, the
+timeline renders 25 years of live data, the snapshot iframe targets
+`web.archive.org`, no console errors appear, and iPhone 14 has zero horizontal
+overflow with a working drawer.
 
 ---
 
