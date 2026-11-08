@@ -298,12 +298,19 @@ npm run test:e2e    # 16 个 Playwright 测试（桌面 + iPhone 14）
 ```bash
 npm run test:e2e                                    # 本地构建，两个项目全跑
 node scripts/verify-production.mjs <部署地址>       # 对线上站点做冒烟验证
+node scripts/check-responsive.mjs  <部署地址>       # 8 种设备宽度，38 项断言
+node scripts/check-snapshots.mjs   <部署地址>       # 快照确实能渲染/或如实回退
 node scripts/capture-screenshots.mjs <部署地址>     # 重新生成 README 截图
 ```
 
 `verify-production.mjs` 会在部署地址上逐项断言：边缘函数返回真实 CDX 数据且带 CORS、
 SSRF 与非法主机被拒绝、时间轴渲染出 25 年真实数据、快照 iframe 指向
 `web.archive.org`、控制台无报错，以及 iPhone 14 零横向溢出且抽屉可用。
+
+`check-responsive.mjs` 覆盖 iPhone SE 到 4K，断言零横向溢出、头部作者链接存在、
+各断点导航形态正确、移动端输入框为 16px（避免 iOS 自动缩放）。
+`check-snapshots.mjs` 确认真实存档快照能内嵌渲染，或如实显示"无法内嵌"面板并提供
+可用的外部链接。
 
 ---
 

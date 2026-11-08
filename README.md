@@ -312,6 +312,8 @@ Run `npx playwright test --project=iphone-14` for the mobile gate alone.
 ```bash
 npm run test:e2e                                    # local build, both projects
 node scripts/verify-production.mjs <deployed-url>    # smoke test the live site
+node scripts/check-responsive.mjs  <deployed-url>    # 8 device widths, 38 assertions
+node scripts/check-snapshots.mjs   <deployed-url>    # snapshot really renders/escapes
 node scripts/capture-screenshots.mjs <deployed-url> # regenerate README images
 ```
 
@@ -320,6 +322,12 @@ returns real CDX data with CORS, SSRF and invalid-host targets are rejected, the
 timeline renders 25 years of live data, the snapshot iframe targets
 `web.archive.org`, no console errors appear, and iPhone 14 has zero horizontal
 overflow with a working drawer.
+
+`check-responsive.mjs` walks iPhone SE → 4K and asserts zero horizontal overflow,
+a header author link, the correct nav mode per breakpoint, and 16px inputs on
+mobile (no iOS auto-zoom). `check-snapshots.mjs` confirms a real archived
+snapshot renders inline — or that the honest "cannot be embedded" panel with a
+working external link appears instead.
 
 ---
 
